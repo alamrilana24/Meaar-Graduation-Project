@@ -1,0 +1,68 @@
+﻿@model Meaar5.Models.User
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account - Meaar</title>
+    <link rel="stylesheet" href="~/css/CreateAccount.css" />
+</head>
+<body>
+
+    <div class="split-container">
+        <div class="left-side">
+            <img src="~/photos/logoMeaar.jpeg" alt="Meaar Logo" />
+        </div>
+
+        <div class="right-side">
+            <div class="form-box">
+                <h2 class="form-title">Create Account</h2>
+
+                <form asp-action="CreateAccount" method="post">
+                    <div class="input-group">
+                        <label>First Name</label>
+                        <input asp-for="FirstName" class="neu-input" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Last Name</label>
+                        <input asp-for="LastName" class="neu-input" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input asp-for="Email" class="neu-input" placeholder="user@taibahu.edu.sa" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input asp-for="Password" type="password" class="neu-input" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn-register">Register</button>
+
+
+                    <p class="footer-link">
+                        Already have an account? <a asp-controller="Home" asp-action="Login">Login now</a>
+                    </p>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+</html>

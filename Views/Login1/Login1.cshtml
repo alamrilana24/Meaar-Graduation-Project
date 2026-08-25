@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    var role = ViewBag.Role ?? "Faculty";
+}
+
+<div class="login-page">
+    <div class="login-card">
+        <div class="login-avatar">
+            <i class="fa fa-user"></i>
+        </div>
+
+        <h2 class="login-title">Login as @role</h2>
+
+
+
+        <form asp-action="Login1" method="post" id="loginForm" novalidate>
+            <input type="hidden" name="role" value="@role" />
+
+
+
+            <input type="email"
+                   id="name"
+                   name="name"
+                   placeholder="Email"
+                   class="login-input" />
+
+
+            @Html.ValidationMessage("name", "", new { @class = "hint err" })
+
+
+            <!-- TEST TO ME -->
+
+            <div class="hint error-msg" id="nameErr" style="display:none;">
+                Please enter your Email
+            </div>
+
+            <!-- PASSWORD + EYE -->
+            <div class="pass-wrap">
+                <input type="password"
+                       id="password"
+                       name="password"
+                       placeholder="Password"
+                       class="login-input pass-input"
+                       autocomplete="current-password" />
+
+                <!-- زر العين لازم يبقى button عشان ما يرسل الفورم -->
+                <button type="button" class="eye-btn" id="togglePassword" aria-label="Show password">
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+            </div>
+
+
+            @Html.ValidationMessage("password", "", new { @class = "hint err" })
+
+
+
+
+
+
+
+
+
+
+            <div class="err" id="passLenErr" style="display:none;">
+                Password must be at least 8 characters.
+            </div>
+
+            <!-- أهم تعديل هنا: submit -->
+            <button type="submit" id="loginBtn" class="login-btn">
+                Login
+            </button>
+
+
+        </form>
+
+        
+
+
+
+
+        <!-- يعرض الباسوورد -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const toggle = document.getElementById("togglePassword");
+                const password = document.getElementById("password");
+
+                if (!toggle || !password) return;
+
+                toggle.addEventListener("click", function () {
+                    const isPassword = password.type === "password";
+                    password.type = isPassword ? "text" : "password";
+
+                    const icon = this.querySelector("i");
+                    if (icon) {
+                        icon.classList.toggle("fa-eye");
+                        icon.classList.toggle("fa-eye-slash");
+                    }
+                });
+            });
+        </script>
+
+
+
+
+
+
+        <p class="login-footer">
+            Back to
+            <a class="login-link" asp-controller="Meaar" asp-action="Login">
+                Choose Role
+            </a>
+        </p>
+        <p class="login-footer">
+            Don’t have an account?
+            <a asp-controller="Home" asp-action="CreateAccount" asp-route-role="@role">Create account</a>
+        </p>
+
+
+
+
+
+
+
+    </div>
+</div>
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Login1.css" asp-append-version="true" />
+}
+
+<script>
+    (() => {
+      const form = document.getElementById('loginForm');
+
+      const emailInput = document.getElementById('name');      // input email id="name"
+      const passInput  = document.getElementById('password');  // input password id="password"
+
+      const emailErr     = document.getElementById('nameErr');
+      const passEmptyErr = document.getElementById('passEmptyErr');
+      const passLenErr   = document.getElementById('passLenErr');
+
+      const show = (el) => el && (el.style.display = 'block');
+      const hide = (el) => el && (el.style.display = 'none');
+
+      function resetErrors() {
+        hide(emailErr);
+        hide(passEmptyErr);
+        hide(passLenErr);
+      }
+
+     /* form.addEventListener('submit', (e) => {
+        resetErrors();
+
+        let valid = true;
+
+        const emailVal = (emailInput.value || '').trim();
+        const passVal  = (passInput.value || '');
+
+        if (!emailVal) {
+          show(emailErr);
+          valid = false;
+        }
+
+        if (!passVal) {
+          show(passEmptyErr);
+          valid = false;
+        } else if (passVal.length < 8) {
+          show(passLenErr);
+          valid = false;
+        }
+
+        if (!valid) e.preventDefault();
+      });*/
+
+      // اختياري: يخفي رسالة الحقل أول ما المستخدم يبدأ يكتب
+      emailInput.addEventListener('input', () => hide(emailErr));
+      passInput.addEventListener('input', () => {
+        hide(passEmptyErr);
+        hide(passLenErr);
+      });
+    })();
+</script>

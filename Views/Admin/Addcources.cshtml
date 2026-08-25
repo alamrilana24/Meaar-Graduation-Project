@@ -1,0 +1,88 @@
+﻿
+@model IEnumerable<Meaar5.Models.CourcesData>
+@{
+    ViewData["Title"] = "admin page ";
+    Layout = "_LayoutDepartment";
+
+}
+<link rel="stylesheet" href="~/css/ManageCources.css" asp-append-version="true" />
+
+ 
+<h1 id="ManageCources"> Admin Course Management</h1>
+<h4 id="descprion">Add,update,courses within the system</h4>
+
+
+
+@if (TempData["Success"] != null)
+{
+            <div class="alert alert-success">
+                @TempData["Success"]
+            </div>
+}
+
+@if (TempData["Error"] != null)
+{
+            <div class="alert alert-danger">
+                @TempData["Error"]
+            </div>
+}
+        <form asp-action="AddCourse" method="post">
+
+            <div class="mb-3">
+                <label>Course Code</label>
+                <input name="CourseCode" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label>Course Name</label>
+                <input name="CourseName" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label>Credit Hours</label>
+        <input name="CreditHours"
+               type="number"
+               class="form-control"
+               min="1"
+               step="1"
+               required />
+    </div>
+
+            <button type="submit" class="btn btn-info w-100">
+                Add Course
+            </button>
+
+        </form>
+
+        <table class="table table-bordered mt-4">
+            <thead class="table-info">
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Hours</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var course in Model)
+            {
+                <tr>
+                    <td>@course.CourseCode</td>
+                    <td>@course.CourseName</td>
+                    <td>@course.CreditHours</td>
+                    <td>
+                        <!-- نفس أزرارك الحالية -->
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center">No courses found</td>
+            </tr>
+        }
+            </tbody>
+        </table>

@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData["Title"] = "مقرراتي";
+    
+}
+<link rel="stylesheet" href="~/css/MyCources.css" asp-append-version="true" />
+<div class="courses-container">
+
+    <!-- مقرراتي -->
+    <a asp-controller="Home" asp-action="Section" asp-route-name="courses" class="course-card science">
+        <div class="course-text">
+            <h3>مقرراتي</h3>
+            <p>عرض جميع المقررات الدراسية</p>
+        </div>
+        <img src="~/photos/mycources.jpg" class="course-img" />
+    </a>
+
+    <!-- رفع الدرجات -->
+    <a asp-controller="Home" asp-action="Section" asp-route-name="upload" class="course-card math">
+        <div class="course-text">
+            <h3>رفع الدرجات</h3>
+            <p>إدخال درجات الطلاب</p>
+        </div>
+        <img src="~/photos/uploaingfiles.jpg" class="course-img" />
+    </a>
+
+    <!-- تحليل النتائج -->
+    <a asp-controller="Home" asp-action="Section" asp-route-name="analysis" class="course-card drawing">
+        <div class="course-text">
+            <h3>تحليل النتائج</h3>
+            <p>إحصائيات وتقارير الأداء</p>
+        </div>
+        <img src="~/photos/analysisresults.jpg" class="course-img" />
+    </a>
+
+    <!-- التقارير -->
+    <a asp-controller="Home" asp-action="Section" asp-route-name="reports" class="course-card eng">
+        <div class="course-text">
+            <h3>التقارير</h3>
+            <p>طباعة وتصدير التقارير</p>
+        </div>
+        <img src="~/photos/reporting.jpg" class="course-img" />
+    </a>
+
+</div>

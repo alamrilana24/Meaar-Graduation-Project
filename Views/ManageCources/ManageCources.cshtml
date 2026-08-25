@@ -1,0 +1,195 @@
+﻿@model List<Meaar5.Models.FacultyCources>
+
+@{
+    ViewData["Title"] = "ManageCources ";
+    Layout = "_LayoutDepartment";
+
+}
+
+<link rel="stylesheet" href="~/css/ManageCources.css" asp-append-version="true" />
+
+<h1 id="ManageCources">Department Course Management</h1>
+<h4 id="descprion">Add,update,and assign courses within the department</h4>
+
+@{
+    // ✅ Safe cast (no NullReference) يحل مشكلة لو البينات لم يتم ارجاعها
+    var facultyList = ViewBag.FacultyMembers as IEnumerable<Meaar5.Models.FacultyMembers>;
+    var courseList = ViewBag.Courses as IEnumerable<Meaar5.Models.CourcesData>;
+}
+
+<div class="container-fluid">
+    <div class="row g-4">
+
+        <!-- Form -->
+        <div class="col-12 col-lg-4">
+            <div class="card shadow-sm border-1 border-info">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Course Assignment</h5>
+                    <p class="text-muted mb-4" style="font-size:14px;">
+                        Select doctor and course, then type section .
+                    </p>
+
+                    <form method="post">
+                        <!-- Doctor dropdown -->
+                        <div class="mb-3">
+                            <label class="form-label">Faculty member:</label>
+
+                            <select name="FacultyId" class="form-select" required>
+                                <option value="" selected disabled>-- Select Faculty member --</option>
+
+                                @if (facultyList != null)
+                                {
+                                    foreach (var f in facultyList)
+                                    {
+                                        <option value="@f.FacultyId">@f.FirstName @f.LastName</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option disabled>-- No faculty loaded --</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Course dropdown -->
+                        <div class="mb-3">
+                            <label class="form-label">Course</label>
+
+                            <select name="CourseId" class="form-select" required>
+                                <option value="" selected disabled>-- Select Course --</option>
+
+                                @if (courseList != null)
+                                {
+                                    foreach (var c in courseList)
+                                    {
+                                        <option value="@c.CourseId">@c.CourseName (@c.CourseCode)</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option disabled>-- No courses loaded --</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Section  -->
+                        <div class="mb-3">
+                            <label class="form-label">Section</label>
+                            <input name="Section" class="form-control" type="text" placeholder=" YF__ , MF__" required />
+                            <div class="form-text">Write section.</div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex gap-2 mt-4">
+                            <!-- Assign -->
+                            <button type="submit"
+                                    class="btn btn-primary flex-grow-1"
+                                    formaction="@Url.Action("Assign", "ManageCources")">
+                                Assign
+                            </button>
+
+                          
+                        </div>
+
+                        <input type="hidden" name="AssignmentId" value="" />
+                        @Html.AntiForgeryToken()
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table  اللي بيعرض المقررات على الشاشة-->
+        <div class="col-12 col-lg-8">
+            <div class="card shadow-sm border-1 border-info">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <h5 class="mb-1">Assigned Courses</h5>
+                            <div class="text-muted" style="font-size:14px;">
+                                <!-- يكتب اسم الدكتور اللي بنعرض جدوله-->
+                                Faculty member: <span class="fw-semibold">@ViewBag.DoctorName</span>
+                            </div>
+                        </div>
+
+                
+                    </div> <!-- الجدول بعد التعيين-->
+                    <div class="table-responsive">
+                        <form method="get" asp-action="Index" asp-controller="ManageCources" class="d-flex gap-2 mb-3">
+                            <input class="form-control" name="FacultyId" list="facultyList"
+                                   placeholder="Type doctor name..." autocomplete="off" required />
+                          <!-- names from facutymembers tables-->
+                            <datalist id="facultyList">
+                                @foreach (var f in (IEnumerable<Meaar5.Models.FacultyMembers>)ViewBag.FacultyMembers)
+                                {
+                                    <option value="@f.FacultyId">@f.FirstName @f.LastName</option>
+                                }
+                            </datalist>
+
+                            <button class="btn btn-primary" type="submit">Show</button>
+                        </form>
+                        <!-- لو بحذف مقرر بعدالتعيين لازم احدده ويتم ازالته-->
+                        <form method="post" asp-action="RemoveSelected" asp-controller="ManageCources">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="FacultyId" value="@Context.Request.Query["FacultyId"]" />
+
+                            <div class="d-flex justify-content-end mb-2">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    Remove Selected
+                                </button>
+                            </div>
+
+                            <div class="table-responsive">
+                               <!-- جدول الدكتور--> 
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th style="width:70px;">Select</th>
+                                            <th style="width:60px;">Num</th>
+                                            <th>Course Name</th>
+                                            <th style="width:120px;">Code</th>
+                                            <th style="width:110px;">Credits</th>
+                                            <th style="width:110px;">Section</th>
+
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <!-- نسترجع البيانات من جدول الربط بين الدكاترة والمقررات -->
+                                        @if (Model != null && Model.Any())
+                                        {
+                                            var i = 1;
+                                            foreach (var row in Model)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <input class="form-check-input" type="checkbox" name="selectedIds" value="@row.Id" />
+                                                    </td>
+                                                    <td>@i</td>
+                                                    <td>@row.Course?.CourseName</td>
+                                                    <td>@row.Course?.CourseCode</td>
+                                                    <td>@row.Course?.CreditHours</td>
+                                                    <td>@row.Section</td>
+                                                </tr>
+                                                i++;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="5" class="text-muted text-center py-4">No data yet.</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

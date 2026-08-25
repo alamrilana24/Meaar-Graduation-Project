@@ -1,0 +1,158 @@
+﻿:root {
+    --color-primary: #055B5C;
+    --color-accent: #6EC6CA;
+    --gradient: linear-gradient(135deg, #8474A1, #08979D); /*يحفظ تدرج الخلفية باسم --gradient */
+}
+
+body, html{
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /*  الخط المستخدم في الصفحة */
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+
+/*split layout*/
+.split-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+
+/*Left side with image*/
+.left-side {
+    flex: 1;
+    background: var(--gradient); /*تدرج بالوان الخلفية*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px
+}
+
+
+    /*Image styling*/
+    .left-side img {
+        max-width: 65%;
+        height: auto;
+        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+    }
+
+
+/*right side*/
+.right-side {
+    flex: 1;
+    background-color: white;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 40px;
+    overflow-y: auto;
+}
+
+/*form elements (adresses, labels, buttons)*/
+.form-box {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+/*  Create Account  عنوان الصفحة */
+.form-title {
+    color: var(--color-primary);
+    font-size: 38px;
+    margin-bottom: 50px;
+    font-weight: bold;
+}
+
+.form-box p {
+    color: #888;
+    font-size: 18px;
+    margin-bottom: 35px;
+}
+
+
+/* Input groups (label + input) المسافة الي بتفصل بين كل label والثاني */
+.input-group {
+    margin-bottom: 25px;
+}
+
+    /* Labels */
+    .input-group label {
+        display: block;
+        margin-bottom: 10px; /*Distance between every label and name*/
+        font-weight: 600;
+        color: #333;
+        font-size: 18px;
+    }
+
+/* Labels */
+.neu-input {
+    width: 100%;
+    padding: 18px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    background-color: #fafafa;
+    box-sizing: border-box;
+    font-size: 16px; /*  Placeholder */
+    transition: all 0.3s ease;
+    box-shadow: inset 2px 2px 5px #e0e0e0, inset -2px -2px 5px #ffffff;
+}
+
+    .neu-input:focus {
+        border-color: var(--color-accent);
+        box-shadow: 0 0 12px rgba(110, 198, 202, 0.4);
+        outline: none;
+        background-color: white;
+    }
+
+
+/* Register button */
+.btn-register {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(to right, #08979D, #055B5C);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 20px; /*  خط الزر */
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    box-shadow: 0 5px 15px rgba(5, 91, 92, 0.3);
+}
+
+    .btn-register:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(5, 91, 92, 0.4);
+    }
+
+.text-danger {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Footer link اخر الصفحة عند already have account? */
+.footer-link {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 16px;
+    color: #777; /*  رمادي */
+}
+
+    /* Link styling (login now) */
+    .footer-link a {
+        color: var(--color-primary); /*  login now الزيتي  */
+        text-decoration: none; /*remove the line under link login now*/
+        font-weight: bold;
+        transition: color 0.3s; /* color changes when the mouse hovers in 0.3 */
+    }
+
+        .footer-link a:hover {
+            color: var(--color-accent); /* the color when hovered */
+            text-decoration: underline; /* link line appears when hovered */
+        }

@@ -1,0 +1,246 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Login";
+    
+}
+
+
+
+<div class="login-page">
+    <div class="login-card">
+        <div class="login-avatar">
+            <i class="fa fa-user"></i>
+        </div>
+        <h2 class="login-title">Login as</h2>
+
+        <!-- Change button text here فقط -->
+        <a asp-controller="Login1"
+           asp-action="Login1"
+           asp-route-role="Faculty"
+           class="login-btn">
+            Faculty Member
+        </a>
+
+        <a asp-controller="Login1"
+           asp-action="Login1"
+           asp-route-role="DepartmentHead"
+           class="login-btn">
+            Department Head
+        </a>
+
+        
+        <a asp-controller="Login1"
+           asp-action="Login1"
+           asp-route-role="Admin"
+           class="login-btn admin-btn">
+            Admin
+        </a>
+
+    </div>
+</div>
+
+<style>
+    :root {
+        /* الالوان */
+        --p1: #CCABD8; 
+        --p2: #8474A1; 
+        --p3: #6EC6CA; 
+        --p4: #08979D; 
+        --p5: #055B5C; 
+
+        --ink: #0f172a;
+        --muted: #475569;
+        --card: rgba(255,255,255,.86);
+        --stroke: rgba(255,255,255,.45);
+        --shadow: 0 24px 60px rgba(2, 22, 23, .18);
+        --radius: 18px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    /* الصفحة كاملة*/
+    .login-page {
+        min-height: calc(100vh - 70px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 42px 16px;
+        position: relative;
+        overflow: hidden;
+        /* الوان الخلفية */
+        background: radial-gradient(900px 500px at 15% 18%, rgba(204,171,216,.45), transparent 60%), radial-gradient(800px 520px at 85% 20%, rgba(110,198,202,.42), transparent 60%), radial-gradient(700px 520px at 60% 85%, rgba(8,151,157,.25), transparent 60%), linear-gradient(135deg, rgba(132,116,161,.18), rgba(5,91,92,.22));
+
+    }
+
+        
+
+     
+
+    /* الكارد */
+    .login-card {
+        width: min(520px, 92vw);
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        border-radius: var(--radius);
+        padding: 44px 30px 30px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        position: relative;
+        z-index: 1;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    .login-avatar i {
+        font-size: 32px;
+        color: #ffffff; /*الافتار */
+    }
+
+    /* الدائرة */
+
+    .login-avatar {
+        position: absolute;
+        top: -36px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        /* تدرج الالوان داخل الافتار */
+        background: linear-gradient(135deg, #CCABD8, #8474A1, #6EC6CA, #08979D, #055B5C, #6EC6CA );
+        background-size: 400% 400%;
+        animation: avatarGradient 16s ease-in-out infinite;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 25px rgba(5, 91, 92, .35);
+        overflow: hidden;
+    }
+
+        /* لمعة خفيفة */
+        .login-avatar::before {
+            content: "";
+            position: absolute;
+            inset: -30%;
+            background: radial-gradient( circle at 30% 25%, rgba(255,255,255,.45), rgba(255,255,255,0) 55% );
+            transform: rotate(12deg);
+            pointer-events: none;
+        }
+
+    /* حركة التدرج */
+    @@keyframes avatarGradient {
+        0%
+
+    {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+
+    }
+
+    .login-avatar span {
+        font-size: 32px;
+        color: #fff;
+        position: relative;
+        z-index: 1;
+    }
+        
+
+    .login-title {
+        margin: 18px 0 26px;
+        font-size: 34px;
+        font-weight: 900;
+        letter-spacing: .3px;
+        color: var(--ink);
+    }
+
+    /* buttons */
+    .login-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 320px;
+        padding: 14px 18px;
+        margin: 0 auto 14px;
+        color: #fff !important;
+        text-decoration: none !important;
+        border-radius: 999px;
+        font-weight: 900;
+        letter-spacing: .2px;
+        background: linear-gradient(90deg, var(--p4), var(--p5));
+        box-shadow: 0 16px 28px rgba(5,91,92,.20);
+        transition: transform .14s ease, box-shadow .14s ease, filter .14s ease;
+    }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 38px rgba(5,91,92,.26);
+            filter: brightness(1.03);
+        }
+
+        /* الزر الثاني */
+        .login-btn:nth-of-type(2) {
+            background: linear-gradient(90deg, var(--p2), var(--p3));
+            box-shadow: 0 16px 28px rgba(132,116,161,.18);
+        }
+
+            .login-btn:nth-of-type(2):hover {
+                box-shadow: 0 20px 38px rgba(132,116,161,.22);
+            }
+
+    /* ستايل الزر الجديد */
+
+    .admin-btn {
+        background: linear-gradient(90deg, #6EC6CA, #08979D);
+    
+    }
+
+
+
+
+
+    .login-footer {
+        margin: 18px 0 0;
+        font-size: 14px;
+        color: var(--muted);
+        font-weight: 700;
+    }
+
+    .login-link {
+        color: var(--p4);
+        text-decoration: none;
+        margin-left: 6px;
+        font-weight: 900;
+    }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+
+    /* responsive */
+    @@media (max-width: 480px) {
+        .login-card
+
+    {
+        padding: 40px 18px 26px;
+    }
+
+    .login-title {
+        font-size: 30px;
+    }
+       
+
+
+    }</style>
